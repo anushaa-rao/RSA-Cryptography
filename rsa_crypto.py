@@ -1,4 +1,6 @@
 import Crypto.Util.number
+from Crypto.Util.number import bytes_to_long 
+from Crypto.Util.number import long_to_bytes
 
 
 def lcm(num1: int, num2: int) -> int:
@@ -59,13 +61,18 @@ def decryptRSA(c: int, d: int, n: int):
 
 def main():
 
-	print("Plaintext = 65")
-	# Chosen plaintext m = 65
-	m = 65
-	n, e, c, d = encrpytRSA(m, 256)
-	print(f"Public key:\n(n, e) = ({n}, {e})")
+	print("Please provide plaintext")
+	plaintext = bytes(input(), 'utf-8')
+	m = bytes_to_long(plaintext)
 
-	print(f"Plaintext = {decryptRSA(c, d, n)}")
+	print(f"m = {m}")
+
+	n, e, c, d = encrpytRSA(m, 64)
+	print(f"Public key:\n(n, e) = ({n}, {e})")
+	print(f"Ciphertext = {c}")
+
+	plaintext_decrypted = str(long_to_bytes(decryptRSA(c, d, n)), 'utf-8')
+	print(f"Plaintext = {plaintext_decrypted}")
 
 
 
